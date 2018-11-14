@@ -1,0 +1,130 @@
+{
+  "project_info": {
+    "project_number": "877516480450",
+    "firebase_url": "https://dynamic-class.firebaseio.com",
+    "project_id": "dynamic-class",
+    "storage_bucket": "dynamic-class.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877516480450:android:ed157cc3dc17cd29",
+        "android_client_info": {
+          "package_name": "com.example.mateu.dynamicclass_student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877516480450-anblfop0dj6rd7tusblhkir35d0skgnv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mateu.dynamicclass_student",
+            "certificate_hash": "624a64d5e66dbdf4dbea5fd183818c8ac4057e31"
+          }
+        },
+        {
+          "client_id": "877516480450-qu15dhdua4bgha94biok8ks5pdmogjjc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEhBH4MBQ9RXjIuVo4y-E-tBcaNUm69fs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "877516480450-qu15dhdua4bgha94biok8ks5pdmogjjc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877516480450:android:510f5b2ceaec29f2",
+        "android_client_info": {
+          "package_name": "com.example.mateu.dynamicclass_teacher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877516480450-gd0vffl3f0l4qj9590u85fmvvorp79m0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mateu.dynamicclass_teacher",
+            "certificate_hash": "624a64d5e66dbdf4dbea5fd183818c8ac4057e31"
+          }
+        },
+        {
+          "client_id": "877516480450-qu15dhdua4bgha94biok8ks5pdmogjjc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEhBH4MBQ9RXjIuVo4y-E-tBcaNUm69fs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "877516480450-qu15dhdua4bgha94biok8ks5pdmogjjc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877516480450:android:3483580be6dc6dc7",
+        "android_client_info": {
+          "package_name": "com.poli.dynamic.class"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877516480450-qu15dhdua4bgha94biok8ks5pdmogjjc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEhBH4MBQ9RXjIuVo4y-E-tBcaNUm69fs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
