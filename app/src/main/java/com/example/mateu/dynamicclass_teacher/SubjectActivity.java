@@ -50,7 +50,7 @@ public class SubjectActivity extends AppCompatActivity {
             }
         });
 
-        Button mButtonStudents = (Button) findViewById(R.id.buttonStudents);
+        Button mButtonStudents = (Button) findViewById(R.id.buttonApplyExercises);
         mButtonStudents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

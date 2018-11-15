@@ -3,7 +3,6 @@ package com.example.mateu.dynamicclass_teacher;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,8 +13,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class ChapterActivity extends AppCompatActivity {
 
@@ -56,11 +53,11 @@ public class ChapterActivity extends AppCompatActivity {
             }
         });
 
-        Button mButtonStudents = (Button) findViewById(R.id.buttonStudents);
-        mButtonStudents.setOnClickListener(new View.OnClickListener() {
+        Button mButtonApplyExercises = (Button) findViewById(R.id.buttonApplyExercises);
+        mButtonApplyExercises.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonStudentsEvent();
+                buttonApplyExercisesEvent();
             }
         });
 
@@ -106,9 +103,11 @@ public class ChapterActivity extends AppCompatActivity {
 
     public void buttonDeletEvent(){
         //TODO
+    }
+
+    public void buttonApplyExercisesEvent(){
         Intent intent = new Intent(this, NewChapterRoutine.class);
         long[] myArray = new long[5];
-        //ArrayList<Long> myList = new ArrayList<Long>();
 
         for (int i = 1; i <= 5; i++){
             long aux = chapterSnapshot.child("Exercises").child(String.valueOf(i)).getChildrenCount();
@@ -119,10 +118,6 @@ public class ChapterActivity extends AppCompatActivity {
         intent.putExtra("subjectCode", subjectCode);
         intent.putExtra("chapterIndex", chapterIndex);
         startActivity(intent);
-    }
-
-    public void buttonStudentsEvent(){
-        //TODO
     }
 
     public void buttonExercisesEvent(String subjectCode, String chapterIndex){
