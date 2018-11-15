@@ -9,24 +9,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".NewClassActivity" />
-        <activity android:name=".MySubjects" />
-        <activity android:name=".SubjectActivity" />
-        <activity android:name=".MyChapters" />
-        <activity android:name=".ChapterActivity" />
-        <activity android:name=".NewChapterActivity" />
-        <activity android:name=".MyExercises" />
-        <activity android:name=".NewExercise" />
-        <activity android:name=".ExerciseActivity" />
-        <activity android:name=".NewChapterRoutine"></activity>
+        <activity android:name=".SignUpActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NewClassActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MySubjects"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SubjectActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MyChapters"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ChapterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NewChapterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MyExercises"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NewExercise"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ExerciseActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NewChapterRoutine"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

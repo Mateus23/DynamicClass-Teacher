@@ -70,6 +70,11 @@ public class MySubjects extends AppCompatActivity {
 
                         mScrollView.addView(b);
                     }
+                    if (mScrollView.getChildCount() == 0){
+                        findViewById(R.id.noSubjectsText).setVisibility(View.VISIBLE);
+                    }else{
+                        findViewById(R.id.noSubjectsText).setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 @Override
