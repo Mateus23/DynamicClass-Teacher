@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonStudents"
+        android:id="@+id/buttonApplyExercises"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -55,7 +55,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
         android:text="Capitulos"
-        app:layout_constraintBottom_toTopOf="@+id/buttonStudents"
+        app:layout_constraintBottom_toTopOf="@+id/buttonApplyExercises"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
