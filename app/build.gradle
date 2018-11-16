@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'com.github.chathuralakmal:AndroidImagePopup:1.2.1'
     implementation 'com.jaredrummler:material-spinner:1.3.0'
+    implementation 'com.jjoe64:graphview:4.2.2'
 }

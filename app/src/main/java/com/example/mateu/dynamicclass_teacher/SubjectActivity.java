@@ -65,6 +65,14 @@ public class SubjectActivity extends AppCompatActivity {
                 buttonDeletEvent();
             }
         });
+
+        Button mButtonPerformance = findViewById(R.id.buttonPerformance);
+        mButtonPerformance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonPerformanceEvent(code);
+            }
+        });
     }
 
     @Override
@@ -109,6 +117,12 @@ public class SubjectActivity extends AppCompatActivity {
 
     public void buttonChaptersEvent(String subjectCode){
         Intent intent = new Intent(this, MyChapters.class);
+        intent.putExtra("subjectCode", subjectCode);
+        startActivity(intent);
+    }
+
+    public void buttonPerformanceEvent(String subjectCode){
+        Intent intent = new Intent(this, PerformanceActivity.class);
         intent.putExtra("subjectCode", subjectCode);
         startActivity(intent);
     }
