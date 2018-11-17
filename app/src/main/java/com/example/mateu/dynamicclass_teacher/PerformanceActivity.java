@@ -17,10 +17,7 @@ import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class PerformanceActivity extends AppCompatActivity {
     private GraphView mGraphViewPerformance;
@@ -42,8 +39,6 @@ public class PerformanceActivity extends AppCompatActivity {
     private List<String> mChapterList;
     private List<String> mStudentList;
 
-    private String mSubjectCode;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +50,9 @@ public class PerformanceActivity extends AppCompatActivity {
         mSpinnerDifficulty = findViewById(R.id.spinnerDifficulty);
 
         Bundle bundle = getIntent().getExtras();
-        mSubjectCode = bundle.getString("subjectCode");
+        String subjectCode = bundle.getString("subjectCode");
 
-        mPerformanceAdapter = new PerformanceAdapter(mSubjectCode);
+        mPerformanceAdapter = new PerformanceAdapter(subjectCode);
 
         mChapterList = mPerformanceAdapter.getListOfChaptersName();
         mStudentList = mPerformanceAdapter.getListOfStudentsName();
@@ -84,7 +79,7 @@ public class PerformanceActivity extends AppCompatActivity {
                     return null;
                 }
                 else {
-                    return super.formatLabel(value, isValueX) + " %";
+                    return super.formatLabel(value, false) + " %";
                 }
             }
         });
@@ -142,9 +137,9 @@ public class PerformanceActivity extends AppCompatActivity {
     }
 
     private void readData(){
-        boolean allChapters = mChapterFilter == ALL_CHAPTERS;
-        boolean allStudents = mStudentFilter == ALL_STUDENTS;
-        boolean allDifficulties = mDifficultyFilter == ALL_DIFFICULTIES;
+        boolean allChapters = mChapterFilter.equals(ALL_CHAPTERS);
+        boolean allStudents = mStudentFilter.equals(ALL_STUDENTS);
+        boolean allDifficulties = mDifficultyFilter.equals(ALL_DIFFICULTIES);
 
         if (allChapters){
             List<Integer> percentageList;
