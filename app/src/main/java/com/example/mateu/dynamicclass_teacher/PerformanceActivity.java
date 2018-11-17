@@ -32,9 +32,22 @@ public class PerformanceActivity extends AppCompatActivity {
     private MaterialSpinner mSpinnerDifficulty;
     private ProgressBar mProgressBar;
 
-    static final String ALL_CHAPTERS = "All Chapters";
-    static final String ALL_STUDENTS = "All Students";
-    static final String ALL_DIFFICULTIES = "All Difficulties";
+    static final String ALL_CHAPTERS = "Todos";
+    static final String ALL_STUDENTS = "Todos";
+    static final String ALL_DIFFICULTIES = "Todas";
+
+    static final String STUDENTS_LABEL = "Estudante";
+    static final String CHAPTERS_LABEL = "Capítulo";
+    static final String PERCENTAGE_LABEL = "Pontos (Percentual)";
+
+    static final String RIGHT_LABEL = "Correto";
+    static final String WRONG_LABEL = "Incorreto";
+
+    private CountDownTimer mCountDownTimer;
+
+    private PerformanceAdapter mPerformanceAdapter;
+    private List<String> mChapterList;
+    private List<String> mStudentList;
 
     //starting values
     private String mChapterFilter = ALL_CHAPTERS;
@@ -44,13 +57,6 @@ public class PerformanceActivity extends AppCompatActivity {
     private int mChapterIndex = 1;
     private int mStudentIndex = 1;
     private int mDifficultyIndex = 1;
-
-    private PerformanceAdapter mPerformanceAdapter;
-
-    private List<String> mChapterList;
-    private List<String> mStudentList;
-
-    private CountDownTimer mCountDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +95,8 @@ public class PerformanceActivity extends AppCompatActivity {
     }
 
     private void setupScreen(){
-        mProgressBar.setVisibility(View.INVISIBLE);
         mCountDownTimer.cancel();
+        mProgressBar.setVisibility(View.INVISIBLE);
         setupGraph();
         setupSpinners();
         readData();
@@ -98,14 +104,15 @@ public class PerformanceActivity extends AppCompatActivity {
 
     private void setupGraph(){
         mGraphViewPerformance.setTitle("Performance");
+        mGraphViewPerformance.setTitleTextSize(50);
 
         LegendRenderer legendRenderer = mGraphViewPerformance.getLegendRenderer();
         legendRenderer.setVisible(true);
         legendRenderer.setAlign(LegendRenderer.LegendAlign.TOP);
 
         GridLabelRenderer gridLabelRenderer = mGraphViewPerformance.getGridLabelRenderer();
-        gridLabelRenderer.setHorizontalAxisTitle("Estudantes");
-        gridLabelRenderer.setVerticalAxisTitle("Pontos (Percentual)");
+        gridLabelRenderer.setHorizontalAxisTitle(STUDENTS_LABEL);
+        gridLabelRenderer.setVerticalAxisTitle(PERCENTAGE_LABEL);
         gridLabelRenderer.setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -123,12 +130,13 @@ public class PerformanceActivity extends AppCompatActivity {
         viewport.setScalable(true);
 
         viewport.setXAxisBoundsManual(true);
-        viewport.setMinX(-2);
+        viewport.setMinX(-3);
         viewport.setMaxX(5);
 
         viewport.setYAxisBoundsManual(true);
         viewport.setMinY(-10);
         viewport.setMaxY(110);
+
     }
 
     private void setupSpinners(){
@@ -173,7 +181,7 @@ public class PerformanceActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 mDifficultyFilter = item.toString();
-                mDifficultyIndex = position;
+                mDifficultyIndex = position + 1;
                 mGraphViewPerformance.removeAllSeries();
                 readData();
             }
@@ -239,40 +247,16 @@ public class PerformanceActivity extends AppCompatActivity {
 
         for (int i = 0; i < size; i++){
             int score = percentageList.get(i);
-            DataPoint rightData = new DataPoint(i + 1, score);
-            DataPoint wrongData = new DataPoint(i + 1, 100 - score);
+            DataPoint rightData = new DataPoint(i, score);
+            DataPoint wrongData = new DataPoint(i, 100 - score);
             rightPoints[i] = rightData;
             wrongPoints[i] = wrongData;
         }
 
         BarGraphSeries<DataPoint> rightSeries = new BarGraphSeries<>(rightPoints);
-        rightSeries.setColor(Color.GREEN);
-        rightSeries.setAnimated(true);
-        rightSeries.setTitle("Right");
-        rightSeries.setSpacing(20);
-        rightSeries.setDrawValuesOnTop(true);
-        rightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
-            @Override
-            public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX() - 1) + "\n" + "Right: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(wrongPoints);
-        wrongSeries.setColor(Color.RED);
-        wrongSeries.setAnimated(true);
-        wrongSeries.setTitle("Wrong");
-        wrongSeries.setSpacing(20);
-        wrongSeries.setDrawValuesOnTop(true);
-        wrongSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
-            @Override
-            public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX() - 1) + "\n" + "Wrong: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        mGraphViewPerformance.addSeries(rightSeries);
-        mGraphViewPerformance.addSeries(wrongSeries);
+        setupSeries(rightSeries, wrongSeries, CHAPTERS_LABEL);
     }
 
     private void generateSeriesSingleChapter(int[] results){
@@ -286,30 +270,48 @@ public class PerformanceActivity extends AppCompatActivity {
         DataPoint wrongPoints = new DataPoint(0, wrongsPercentage);
 
         BarGraphSeries<DataPoint> rightSeries = new BarGraphSeries<>(new DataPoint[]{rightPoints});
+        BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(new DataPoint[]{wrongPoints});
+
+        setupSeries(rightSeries, wrongSeries, STUDENTS_LABEL);
+    }
+
+    private void setupSeries(BarGraphSeries<DataPoint> rightSeries, BarGraphSeries<DataPoint> wrongSeries, final String label){
+
+        final List<String> nameList;
+        if (label.equals(STUDENTS_LABEL)){
+            nameList = mStudentList;
+        }
+        else{
+            nameList = mChapterList;
+        }
+
         rightSeries.setColor(Color.GREEN);
         rightSeries.setAnimated(true);
-        rightSeries.setTitle("Right");
-        rightSeries.setSpacing(20);
+        rightSeries.setTitle(RIGHT_LABEL);
+        rightSeries.setSpacing(30);
         rightSeries.setDrawValuesOnTop(true);
+        rightSeries.setValuesOnTopColor(Color.BLACK);
         rightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX() - 1) + "\n" + "Right: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mGraphViewPerformance.getContext(), label + ": " + nameList.get((int) dataPoint.getX()) + "\n" + RIGHT_LABEL + ": " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
             }
         });
 
-        BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(new DataPoint[]{wrongPoints});
         wrongSeries.setColor(Color.RED);
         wrongSeries.setAnimated(true);
-        wrongSeries.setTitle("Wrong");
-        wrongSeries.setSpacing(20);
+        wrongSeries.setTitle(WRONG_LABEL);
+        wrongSeries.setSpacing(30);
         wrongSeries.setDrawValuesOnTop(true);
+        wrongSeries.setValuesOnTopColor(Color.BLACK);
         wrongSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX() - 1) + "\n" + "Wrong: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mGraphViewPerformance.getContext(), label + ": " + nameList.get((int) dataPoint.getX()) + "\n" + WRONG_LABEL + ": " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
             }
         });
+
+        mGraphViewPerformance.getGridLabelRenderer().setHorizontalAxisTitle(label);
 
         mGraphViewPerformance.addSeries(rightSeries);
         mGraphViewPerformance.addSeries(wrongSeries);
