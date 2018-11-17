@@ -38,6 +38,8 @@
         <activity android:name=".ExerciseActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".NewChapterRoutine"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PerformanceActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 
