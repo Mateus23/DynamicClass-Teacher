@@ -17,9 +17,12 @@ import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PerformanceActivity extends AppCompatActivity {
+    private static final String TAG = "PerformanceActivity";
+
     private GraphView mGraphViewPerformance;
     private MaterialSpinner mSpinnerChapter;
     private MaterialSpinner mSpinnerStudent;
@@ -34,6 +37,10 @@ public class PerformanceActivity extends AppCompatActivity {
     private String mStudentFilter = ALL_STUDENTS;
     private String mDifficultyFilter = ALL_DIFFICULTIES;
 
+    private int mChapterIndex = 1;
+    private int mStudentIndex = 1;
+    private int mDifficultyIndex = 1;
+
     private PerformanceAdapter mPerformanceAdapter;
 
     private List<String> mChapterList;
@@ -44,18 +51,15 @@ public class PerformanceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_performance);
 
-        mGraphViewPerformance = findViewById(R.id.graphViewPerformance);
-        mSpinnerChapter = findViewById(R.id.spinnerChapter);
-        mSpinnerStudent = findViewById(R.id.spinnerStudent);
-        mSpinnerDifficulty = findViewById(R.id.spinnerDifficulty);
-
         Bundle bundle = getIntent().getExtras();
         String subjectCode = bundle.getString("subjectCode");
 
         mPerformanceAdapter = new PerformanceAdapter(subjectCode);
 
-        mChapterList = mPerformanceAdapter.getListOfChaptersName();
-        mStudentList = mPerformanceAdapter.getListOfStudentsName();
+        mGraphViewPerformance = findViewById(R.id.graphViewPerformance);
+        mSpinnerChapter = findViewById(R.id.spinnerChapter);
+        mSpinnerStudent = findViewById(R.id.spinnerStudent);
+        mSpinnerDifficulty = findViewById(R.id.spinnerDifficulty);
 
         setupGraph();
         setupSpinners();
@@ -98,21 +102,26 @@ public class PerformanceActivity extends AppCompatActivity {
     }
 
     private void setupSpinners(){
-        List<String> spinnerChapterList = mChapterList;
+        mChapterList = mPerformanceAdapter.getListOfChaptersName();
+        mStudentList = mPerformanceAdapter.getListOfStudentsName();
+
+        List<String> spinnerChapterList = new ArrayList<>(mChapterList);
         spinnerChapterList.add(ALL_CHAPTERS);
         mSpinnerChapter.setItems(spinnerChapterList);
 
-        List<String> spinnerStudentList = mStudentList;
+        List<String> spinnerStudentList = new ArrayList<>(mStudentList);
         spinnerStudentList.add(ALL_STUDENTS);
         mSpinnerStudent.setItems(spinnerStudentList);
 
-        mSpinnerDifficulty.setItems(ALL_DIFFICULTIES, 1, 2, 3, 4, 5);
+        mSpinnerDifficulty.setItems(1, 2, 3, 4, 5, ALL_DIFFICULTIES);
 
         mSpinnerChapter.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 mChapterFilter = item.toString();
+                mChapterIndex = position;
                 mGraphViewPerformance.removeAllSeries();
+                setupSpinners();
                 readData();
             }
         });
@@ -121,7 +130,9 @@ public class PerformanceActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 mStudentFilter = item.toString();
+                mStudentIndex = position;
                 mGraphViewPerformance.removeAllSeries();
+                setupSpinners();
                 readData();
             }
         });
@@ -130,7 +141,9 @@ public class PerformanceActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 mDifficultyFilter = item.toString();
+                mDifficultyIndex = position;
                 mGraphViewPerformance.removeAllSeries();
+                setupSpinners();
                 readData();
             }
         });
@@ -141,6 +154,12 @@ public class PerformanceActivity extends AppCompatActivity {
         boolean allStudents = mStudentFilter.equals(ALL_STUDENTS);
         boolean allDifficulties = mDifficultyFilter.equals(ALL_DIFFICULTIES);
 
+//        Toast.makeText(this, "" +
+//                        "allChapters: " + allChapters + "\n" +
+//                        "allStudents: " + allStudents + "\n" +
+//                        "allDifficulties: " + allDifficulties + "\n"
+//                , Toast.LENGTH_SHORT).show();
+
         if (allChapters){
             List<Integer> percentageList;
 
@@ -149,15 +168,15 @@ public class PerformanceActivity extends AppCompatActivity {
                     percentageList = mPerformanceAdapter.getPercentageOfAllClass();
                 }
                 else {
-                    percentageList = mPerformanceAdapter.getPercentageOfAllClassForDifficulty(1);
+                    percentageList = mPerformanceAdapter.getPercentageOfAllClassForDifficulty(mDifficultyIndex);
                 }
             }
             else {
                 if (allDifficulties){
-                    percentageList = mPerformanceAdapter.getPercentageOfRightAnswersForAllChaptersStudent(1);
+                    percentageList = mPerformanceAdapter.getPercentageOfRightAnswersForAllChaptersStudent(mStudentIndex);
                 }
                 else {
-                    percentageList = mPerformanceAdapter.getPercentageOfRightAnswersForAllChaptersStudentAndDIfficulty(1, 1);
+                    percentageList = mPerformanceAdapter.getPercentageOfRightAnswersForAllChaptersStudentAndDIfficulty(mStudentIndex, mDifficultyIndex);
                 }
             }
             generateSeriesAllChapters(percentageList);
@@ -168,18 +187,18 @@ public class PerformanceActivity extends AppCompatActivity {
 
             if (allStudents){
                 if (allDifficulties){
-                    results = mPerformanceAdapter.getRightAndWrongForChapterAllStudents(1);
+                    results = mPerformanceAdapter.getRightAndWrongForChapterAllStudents(mChapterIndex);
                 }
                 else {
-                    results = mPerformanceAdapter.getRightAndWrongForChapterAllStudentsAndDifficulty(1, 1);
+                    results = mPerformanceAdapter.getRightAndWrongForChapterAllStudentsAndDifficulty(mChapterIndex, mDifficultyIndex);
                 }
             }
             else {
                 if (allDifficulties){
-                    results = mPerformanceAdapter.getRightAndWrongForChapterStudent(1, 1);
+                    results = mPerformanceAdapter.getRightAndWrongForChapterStudent(mStudentIndex, mChapterIndex);
                 }
                 else {
-                    results = mPerformanceAdapter.getRightAndWrongForChapterStudentAndDifficulty(1, 1, 1);
+                    results = mPerformanceAdapter.getRightAndWrongForChapterStudentAndDifficulty(mStudentIndex, mChapterIndex, mDifficultyIndex);
                 }
             }
             generateSeriesSingleChapter(results);
@@ -195,7 +214,6 @@ public class PerformanceActivity extends AppCompatActivity {
 
         for (int i = 0; i < size; i++){
             int score = percentageList.get(i);
-            Toast.makeText(this, score, Toast.LENGTH_SHORT).show();
             DataPoint rightData = new DataPoint(i + 1, score);
             DataPoint wrongData = new DataPoint(i + 1, 100 - score);
             rightPoints[i] = rightData;
@@ -211,7 +229,7 @@ public class PerformanceActivity extends AppCompatActivity {
         rightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX()) + "\n" + "Right: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX() - 1) + "\n" + "Right: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -224,7 +242,7 @@ public class PerformanceActivity extends AppCompatActivity {
         wrongSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX()) + "\n" + "Wrong: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX() - 1) + "\n" + "Wrong: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -233,21 +251,16 @@ public class PerformanceActivity extends AppCompatActivity {
     }
 
     private void generateSeriesSingleChapter(int[] results){
-        int size = results.length;
+        int rights = results[0];
+        int wrongs = results[1];
+        int total = rights + wrongs;
+        int rightsPercentage = rights*100/total;
+        int wrongsPercentage = wrongs*100/total;
 
-        DataPoint[] rightPoints = new DataPoint[size];
-        DataPoint[] wrongPoints = new DataPoint[size];
+        DataPoint rightPoints = new DataPoint(0, rightsPercentage);
+        DataPoint wrongPoints = new DataPoint(0, wrongsPercentage);
 
-        for (int i = 0; i < size; i++){
-            int score = results[i];
-            Toast.makeText(this, score, Toast.LENGTH_SHORT).show();
-            DataPoint rightData = new DataPoint(i + 1, score);
-            DataPoint wrongData = new DataPoint(i + 1, 100 - score);
-            rightPoints[i] = rightData;
-            wrongPoints[i] = wrongData;
-        }
-
-        BarGraphSeries<DataPoint> rightSeries = new BarGraphSeries<>(rightPoints);
+        BarGraphSeries<DataPoint> rightSeries = new BarGraphSeries<>(new DataPoint[]{rightPoints});
         rightSeries.setColor(Color.GREEN);
         rightSeries.setAnimated(true);
         rightSeries.setTitle("Right");
@@ -256,11 +269,11 @@ public class PerformanceActivity extends AppCompatActivity {
         rightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX()) + "\n" + "Right: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX() - 1) + "\n" + "Right: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
             }
         });
 
-        BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(wrongPoints);
+        BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(new DataPoint[]{wrongPoints});
         wrongSeries.setColor(Color.RED);
         wrongSeries.setAnimated(true);
         wrongSeries.setTitle("Wrong");
@@ -269,7 +282,7 @@ public class PerformanceActivity extends AppCompatActivity {
         wrongSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX()) + "\n" + "Wrong: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mGraphViewPerformance.getContext(), "Student: " + mStudentList.get((int) dataPoint.getX() - 1) + "\n" + "Wrong: " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
             }
         });
 
