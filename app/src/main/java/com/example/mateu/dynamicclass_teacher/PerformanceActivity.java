@@ -1,8 +1,11 @@
 package com.example.mateu.dynamicclass_teacher;
 
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -27,6 +30,7 @@ public class PerformanceActivity extends AppCompatActivity {
     private MaterialSpinner mSpinnerChapter;
     private MaterialSpinner mSpinnerStudent;
     private MaterialSpinner mSpinnerDifficulty;
+    private ProgressBar mProgressBar;
 
     static final String ALL_CHAPTERS = "All Chapters";
     static final String ALL_STUDENTS = "All Students";
@@ -46,6 +50,8 @@ public class PerformanceActivity extends AppCompatActivity {
     private List<String> mChapterList;
     private List<String> mStudentList;
 
+    private CountDownTimer mCountDownTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +66,31 @@ public class PerformanceActivity extends AppCompatActivity {
         mSpinnerChapter = findViewById(R.id.spinnerChapter);
         mSpinnerStudent = findViewById(R.id.spinnerStudent);
         mSpinnerDifficulty = findViewById(R.id.spinnerDifficulty);
+        mProgressBar = findViewById(R.id.progressBar);
 
+        waitDataDownload();
+    }
+
+    private void waitDataDownload(){
+        mCountDownTimer = new CountDownTimer(5000, 500) {
+            @Override
+            public void onTick(long l) {
+                if (mPerformanceAdapter.getIsReady()){
+                    setupScreen();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                setupScreen();
+            }
+        };
+        mCountDownTimer.start();
+    }
+
+    private void setupScreen(){
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mCountDownTimer.cancel();
         setupGraph();
         setupSpinners();
         readData();
@@ -108,12 +138,16 @@ public class PerformanceActivity extends AppCompatActivity {
         List<String> spinnerChapterList = new ArrayList<>(mChapterList);
         spinnerChapterList.add(ALL_CHAPTERS);
         mSpinnerChapter.setItems(spinnerChapterList);
+        mSpinnerChapter.setSelectedIndex(spinnerChapterList.size() - 1);
 
         List<String> spinnerStudentList = new ArrayList<>(mStudentList);
         spinnerStudentList.add(ALL_STUDENTS);
+
         mSpinnerStudent.setItems(spinnerStudentList);
+        mSpinnerStudent.setSelectedIndex(spinnerStudentList.size() - 1);
 
         mSpinnerDifficulty.setItems(1, 2, 3, 4, 5, ALL_DIFFICULTIES);
+        mSpinnerDifficulty.setSelectedIndex(5);
 
         mSpinnerChapter.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
@@ -121,7 +155,6 @@ public class PerformanceActivity extends AppCompatActivity {
                 mChapterFilter = item.toString();
                 mChapterIndex = position;
                 mGraphViewPerformance.removeAllSeries();
-                setupSpinners();
                 readData();
             }
         });
@@ -132,7 +165,6 @@ public class PerformanceActivity extends AppCompatActivity {
                 mStudentFilter = item.toString();
                 mStudentIndex = position;
                 mGraphViewPerformance.removeAllSeries();
-                setupSpinners();
                 readData();
             }
         });
@@ -143,7 +175,6 @@ public class PerformanceActivity extends AppCompatActivity {
                 mDifficultyFilter = item.toString();
                 mDifficultyIndex = position;
                 mGraphViewPerformance.removeAllSeries();
-                setupSpinners();
                 readData();
             }
         });
@@ -153,12 +184,6 @@ public class PerformanceActivity extends AppCompatActivity {
         boolean allChapters = mChapterFilter.equals(ALL_CHAPTERS);
         boolean allStudents = mStudentFilter.equals(ALL_STUDENTS);
         boolean allDifficulties = mDifficultyFilter.equals(ALL_DIFFICULTIES);
-
-//        Toast.makeText(this, "" +
-//                        "allChapters: " + allChapters + "\n" +
-//                        "allStudents: " + allStudents + "\n" +
-//                        "allDifficulties: " + allDifficulties + "\n"
-//                , Toast.LENGTH_SHORT).show();
 
         if (allChapters){
             List<Integer> percentageList;

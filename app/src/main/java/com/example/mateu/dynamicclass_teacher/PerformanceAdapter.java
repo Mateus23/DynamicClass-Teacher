@@ -1,7 +1,6 @@
 package com.example.mateu.dynamicclass_teacher;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,10 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class PerformanceAdapter {
 
@@ -153,12 +149,10 @@ public class PerformanceAdapter {
         return percentageList;
     }
 
-    public List<String> getListOfChaptersName(){
-        return chaptersName;
-    }
+    public List<String> getListOfChaptersName(){ return chaptersName; }
 
-    public List<String> getListOfStudentsName(){
-        return studentsName;
-    }
+    public List<String> getListOfStudentsName(){ return studentsName; }
+
+    public boolean getIsReady(){return isReady;}
 
 }
