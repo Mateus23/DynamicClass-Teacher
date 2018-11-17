@@ -32,7 +32,7 @@ public class ChapterScore {
         listOfScoreMap.get(totalDifficulty).put("wrong", allWrong);
         listOfScoreMap.get(totalDifficulty).put("right", allRight);
         listOfScoreMap.get(totalDifficulty).put("total", allWrong + allRight);
-        listOfScoreMap.get(totalDifficulty).put("percentage", Math.round(100 * allRight/(allWrong + allRight)));
+        listOfScoreMap.get(totalDifficulty).put("percentage", Math.round(100 * allRight/Math.max((allWrong + allRight), 1)));
     }
 
     public int getWrongOffDifficulty(int difficulty){
