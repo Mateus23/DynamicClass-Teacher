@@ -124,4 +124,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewStudent" />
 
+    <TextView
+        android:id="@+id/textViewEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/graphViewPerformance"
+        app:layout_constraintEnd_toEndOf="@+id/graphViewPerformance"
+        app:layout_constraintStart_toStartOf="@+id/graphViewPerformance"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerStudent" />
+
 </android.support.constraint.ConstraintLayout>

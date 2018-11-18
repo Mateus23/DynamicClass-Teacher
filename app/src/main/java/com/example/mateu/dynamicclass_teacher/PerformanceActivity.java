@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -31,6 +32,7 @@ public class PerformanceActivity extends AppCompatActivity {
     private MaterialSpinner mSpinnerStudent;
     private MaterialSpinner mSpinnerDifficulty;
     private ProgressBar mProgressBar;
+    private TextView mTextViewEmpty;
 
     static final String ALL_CHAPTERS = "Todos";
     static final String ALL_STUDENTS = "Todos";
@@ -39,6 +41,7 @@ public class PerformanceActivity extends AppCompatActivity {
     static final String STUDENTS_LABEL = "Estudante";
     static final String CHAPTERS_LABEL = "Capítulo";
     static final String PERCENTAGE_LABEL = "Pontos (Percentual)";
+    static final String EMPTY_MESSAGE = "Nenhuma nota disponível";
 
     static final String RIGHT_LABEL = "Correto";
     static final String WRONG_LABEL = "Incorreto";
@@ -57,6 +60,7 @@ public class PerformanceActivity extends AppCompatActivity {
     private int mChapterIndex = 1;
     private int mStudentIndex = 1;
     private int mDifficultyIndex = 1;
+    private int mGraphXOffset = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +77,13 @@ public class PerformanceActivity extends AppCompatActivity {
         mSpinnerStudent = findViewById(R.id.spinnerStudent);
         mSpinnerDifficulty = findViewById(R.id.spinnerDifficulty);
         mProgressBar = findViewById(R.id.progressBar);
+        mTextViewEmpty = findViewById(R.id.textViewEmpty);
 
         waitDataDownload();
     }
 
     private void waitDataDownload(){
-        mCountDownTimer = new CountDownTimer(5000, 500) {
+        mCountDownTimer = new CountDownTimer(5000, 200) {
             @Override
             public void onTick(long l) {
                 if (mPerformanceAdapter.getIsReady()){
@@ -130,8 +135,8 @@ public class PerformanceActivity extends AppCompatActivity {
         viewport.setScalable(true);
 
         viewport.setXAxisBoundsManual(true);
-        viewport.setMinX(-3);
-        viewport.setMaxX(5);
+        viewport.setMinX(mGraphXOffset + -3);
+        viewport.setMaxX(mGraphXOffset + 5);
 
         viewport.setYAxisBoundsManual(true);
         viewport.setMinY(-10);
@@ -213,7 +218,6 @@ public class PerformanceActivity extends AppCompatActivity {
                 }
             }
             generateSeriesAllChapters(percentageList);
-
         }
         else {
             int[] results;
@@ -235,48 +239,70 @@ public class PerformanceActivity extends AppCompatActivity {
                 }
             }
             generateSeriesSingleChapter(results);
-
         }
     }
 
     private void generateSeriesAllChapters(List<Integer> percentageList){
         int size = percentageList.size();
 
-        DataPoint[] rightPoints = new DataPoint[size];
-        DataPoint[] wrongPoints = new DataPoint[size];
+        if (size != 0 && mStudentList.size() != 0){
+            mTextViewEmpty.setText("");
 
-        for (int i = 0; i < size; i++){
-            int score = percentageList.get(i);
-            DataPoint rightData = new DataPoint(i, score);
-            DataPoint wrongData = new DataPoint(i, 100 - score);
-            rightPoints[i] = rightData;
-            wrongPoints[i] = wrongData;
+            DataPoint[] rightPoints = new DataPoint[size];
+            DataPoint[] wrongPoints = new DataPoint[size];
+
+            for (int i = 0; i < size; i++){
+                int score = percentageList.get(i);
+                DataPoint rightData = new DataPoint(mGraphXOffset + i, score);
+                DataPoint wrongData = new DataPoint(mGraphXOffset + i, 100 - score);
+                rightPoints[i] = rightData;
+                wrongPoints[i] = wrongData;
+            }
+
+            BarGraphSeries<DataPoint> rightSeries = new BarGraphSeries<>(rightPoints);
+            BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(wrongPoints);
+
+            setupSeries(rightSeries, wrongSeries, CHAPTERS_LABEL);
+
+            rightSeries.setSpacing(30);
+            wrongSeries.setSpacing(30);
+
         }
-
-        BarGraphSeries<DataPoint> rightSeries = new BarGraphSeries<>(rightPoints);
-        BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(wrongPoints);
-
-        setupSeries(rightSeries, wrongSeries, CHAPTERS_LABEL);
+        else {
+            mTextViewEmpty.setText(EMPTY_MESSAGE);
+        }
     }
 
     private void generateSeriesSingleChapter(int[] results){
         int rights = results[0];
         int wrongs = results[1];
         int total = rights + wrongs;
-        int rightsPercentage = rights*100/total;
-        int wrongsPercentage = wrongs*100/total;
 
-        DataPoint rightPoints = new DataPoint(0, rightsPercentage);
-        DataPoint wrongPoints = new DataPoint(0, wrongsPercentage);
+        if (total != 0){
+            mTextViewEmpty.setText("");
 
-        BarGraphSeries<DataPoint> rightSeries = new BarGraphSeries<>(new DataPoint[]{rightPoints});
-        BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(new DataPoint[]{wrongPoints});
+            int rightsPercentage = rights*100/total;
+            int wrongsPercentage = wrongs*100/total;
 
-        setupSeries(rightSeries, wrongSeries, STUDENTS_LABEL);
+            DataPoint rightPoints = new DataPoint(mGraphXOffset, rightsPercentage);
+            DataPoint wrongPoints = new DataPoint(mGraphXOffset, wrongsPercentage);
+
+            BarGraphSeries<DataPoint> rightSeries = new BarGraphSeries<>(new DataPoint[]{rightPoints});
+            BarGraphSeries<DataPoint> wrongSeries = new BarGraphSeries<>(new DataPoint[]{wrongPoints});
+
+            setupSeries(rightSeries, wrongSeries, STUDENTS_LABEL);
+
+            rightSeries.setSpacing(50);
+            wrongSeries.setSpacing(50);
+
+        }
+        else {
+            mTextViewEmpty.setText("Nenhuma nota disponível");
+        }
+
     }
 
     private void setupSeries(BarGraphSeries<DataPoint> rightSeries, BarGraphSeries<DataPoint> wrongSeries, final String label){
-
         final List<String> nameList;
         if (label.equals(STUDENTS_LABEL)){
             nameList = mStudentList;
@@ -288,26 +314,24 @@ public class PerformanceActivity extends AppCompatActivity {
         rightSeries.setColor(Color.GREEN);
         rightSeries.setAnimated(true);
         rightSeries.setTitle(RIGHT_LABEL);
-        rightSeries.setSpacing(30);
         rightSeries.setDrawValuesOnTop(true);
         rightSeries.setValuesOnTopColor(Color.BLACK);
         rightSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), label + ": " + nameList.get((int) dataPoint.getX()) + "\n" + RIGHT_LABEL + ": " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mGraphViewPerformance.getContext(), label + ": " + nameList.get((int) dataPoint.getX() + mGraphXOffset) + "\n" + RIGHT_LABEL + ": " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
             }
         });
 
         wrongSeries.setColor(Color.RED);
         wrongSeries.setAnimated(true);
         wrongSeries.setTitle(WRONG_LABEL);
-        wrongSeries.setSpacing(30);
         wrongSeries.setDrawValuesOnTop(true);
         wrongSeries.setValuesOnTopColor(Color.BLACK);
         wrongSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(mGraphViewPerformance.getContext(), label + ": " + nameList.get((int) dataPoint.getX()) + "\n" + WRONG_LABEL + ": " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mGraphViewPerformance.getContext(), label + ": " + nameList.get((int) dataPoint.getX() + mGraphXOffset) + "\n" + WRONG_LABEL + ": " + dataPoint.getY() + "%", Toast.LENGTH_SHORT).show();
             }
         });
 
