@@ -42,7 +42,7 @@ public class SubjectActivity extends AppCompatActivity {
             }
         });
 
-        Button mButtonChapters = (Button) findViewById(R.id.buttonExercises);
+        Button mButtonChapters = (Button) findViewById(R.id.buttonChapters);
         mButtonChapters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,19 +50,11 @@ public class SubjectActivity extends AppCompatActivity {
             }
         });
 
-        Button mButtonStudents = (Button) findViewById(R.id.buttonApplyExercises);
+        Button mButtonStudents = (Button) findViewById(R.id.buttonStudents);
         mButtonStudents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonStudentsEvent();
-            }
-        });
-
-        Button mButtonDelete = (Button) findViewById(R.id.buttonDelete);
-        mButtonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonDeletEvent();
+                buttonStudentsEvent(code);
             }
         });
 
@@ -107,12 +99,10 @@ public class SubjectActivity extends AppCompatActivity {
         });
     }
 
-    public void buttonDeletEvent(){
-        //TODO
-    }
-
-    public void buttonStudentsEvent(){
-        //TODO
+    public void buttonStudentsEvent(String subjectCode){
+        Intent intent = new Intent(this, SubjectStudentsActivity.class);
+        intent.putExtra("subjectCode", subjectCode);
+        startActivity(intent);
     }
 
     public void buttonChaptersEvent(String subjectCode){

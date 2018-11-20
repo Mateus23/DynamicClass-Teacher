@@ -84,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button myProfileButton = (Button) findViewById(R.id.profileButton);
+        myProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toProfileActivity();
+            }
+        });
+
         Button mNewClassButton = (Button) findViewById(R.id.newClassButton);
         mNewClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             UID = currentUser.getUid();
             loadInfo(UID);
         }
+
     }
 
     private void loadInfo(String UID){
@@ -177,8 +186,6 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
@@ -204,6 +211,13 @@ public class MainActivity extends AppCompatActivity {
     public void toMySubjectsActivity() {
         Intent intent = new Intent(this, MySubjects.class);
         intent.putExtra("id", currentUser.getUid());
+        startActivity(intent);
+    }
+
+    public void toProfileActivity(){
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("userUID", currentUser.getUid());
+        intent.putExtra("typeOfUser", "Teacher");
         startActivity(intent);
     }
 
