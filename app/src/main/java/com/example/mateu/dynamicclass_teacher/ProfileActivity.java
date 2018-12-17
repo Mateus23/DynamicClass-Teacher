@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileActivity extends AppCompatActivity {
 
     String database_path = "Professores/";
+    String userUID;
     DatabaseReference databaseReference;
     TextView nameView, emailView, phoneView, titleView, subjectIDView;
 
@@ -26,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         String typeOfUser = b.getString("typeOfUser");
-        String userUID = b.getString("userUID");
+        userUID = b.getString("userUID");
         String subjectIndex = b.getString("subjectIndex");
 
         nameView = findViewById(R.id.nameTextVIew);
@@ -65,10 +66,10 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                nameView.setText(nameView.getText().toString() + dataSnapshot.child("completeName").getValue().toString());
-                emailView.setText(emailView.getText().toString() + dataSnapshot.child("email").getValue().toString());
+                nameView.setText(nameView.getText().toString() + CryptographyAdapter.decryptText(dataSnapshot.child("completeName").getValue().toString(), userUID) );
+                emailView.setText(emailView.getText().toString() + CryptographyAdapter.decryptText(dataSnapshot.child("email").getValue().toString(), userUID) );
                 if (dataSnapshot.child("phone").exists()) {
-                    phoneView.setText(phoneView.getText().toString() + dataSnapshot.child("phone").getValue().toString());
+                    phoneView.setText(phoneView.getText().toString() + CryptographyAdapter.decryptText(dataSnapshot.child("phone").getValue().toString(), userUID) );
                 }
             }
 
