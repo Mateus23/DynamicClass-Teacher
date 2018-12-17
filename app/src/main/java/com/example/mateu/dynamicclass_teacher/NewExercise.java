@@ -235,7 +235,7 @@ public class NewExercise extends AppCompatActivity {
                                 // Getting image upload ID.
                                 String ImageUploadId = databaseReference.push().getKey();
 
-                                databaseReference.child("Exercises").child(String.valueOf(getDifficulty())).child(String.valueOf(generatedId)).setValue(exerciseUploadInfo);
+                                databaseReference.child("Exercises").child(String.valueOf(getDifficulty())).child("EX" + String.valueOf(generatedId)).setValue(exerciseUploadInfo);
 
                                 NewExercise.this.finish();
                             } else {
@@ -261,7 +261,7 @@ public class NewExercise extends AppCompatActivity {
         // Getting image upload ID.
         //String ImageUploadId = databaseReference.push().getKey();
 
-        databaseReference.child("Exercises").child(String.valueOf(getDifficulty())).child(String.valueOf(generatedId)).setValue(exerciseUploadInfo);
+        databaseReference.child("Exercises").child(String.valueOf(getDifficulty())).child("EX" + String.valueOf(generatedId)).setValue(exerciseUploadInfo);
 
         NewExercise.this.finish();
     }

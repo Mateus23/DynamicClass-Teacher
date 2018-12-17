@@ -21,6 +21,7 @@ public class SubjectActivity extends AppCompatActivity {
     TextView subjectName;
     TextView subjectDescription;
     DataSnapshot subjectSnapshot;
+    String subjectTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class SubjectActivity extends AppCompatActivity {
 
                 String name = subjectSnapshot.child("name").getValue().toString();
                 String code = subjectSnapshot.child("code").getValue().toString();
-                String subjectTitle = code + " - " + name;
+                subjectTitle = code + " - " + name;
 
                 Object descriptionObject = subjectSnapshot.child("description").getValue();
                 String subjectDescriptionText;
@@ -108,6 +109,7 @@ public class SubjectActivity extends AppCompatActivity {
     public void buttonChaptersEvent(String subjectCode){
         Intent intent = new Intent(this, MyChapters.class);
         intent.putExtra("subjectCode", subjectCode);
+        intent.putExtra("subjectName", subjectTitle);
         startActivity(intent);
     }
 
