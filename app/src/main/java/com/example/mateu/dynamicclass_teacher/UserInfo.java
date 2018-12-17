@@ -14,10 +14,10 @@ public class UserInfo {
     }
 
 
-    public UserInfo(String name, String lastName, String email){
+    public UserInfo(String uId, String name, String lastName, String email){
         this.name = name;
-        this.completeName= name + " " + lastName;
-        this.email = email;
+        this.completeName = CryptographyAdapter.encryptText(name + " " + lastName, uId);
+        this.email = CryptographyAdapter.encryptText(email, uId);
 
     }
 
