@@ -8,13 +8,14 @@
 
     <TextView
         android:id="@+id/chapterName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:gravity="center"
         android:text="Minha Materia"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +24,7 @@
 
     <Button
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -37,30 +38,32 @@
 
     <Button
         android:id="@+id/buttonStudents"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Ver Alunos"
-        app:layout_constraintBottom_toTopOf="@+id/backButton"
+        android:layout_marginBottom="8dp"
+        android:text="Alunos"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPerformance"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonChapters"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="Capitulos"
         app:layout_constraintBottom_toTopOf="@+id/buttonStudents"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -73,22 +76,25 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPerformance"
+        android:gravity="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonChapters"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chapterName" />
 
     <Button
         android:id="@+id/buttonPerformance"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Performance"
-        app:layout_constraintBottom_toTopOf="@+id/buttonChapters"
+        android:layout_marginBottom="8dp"
+        android:text="Desempenho"
+        app:layout_constraintBottom_toTopOf="@+id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

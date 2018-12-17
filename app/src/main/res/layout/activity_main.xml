@@ -88,10 +88,14 @@
 
         <TextView
             android:id="@+id/welcomeText"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:gravity="center_horizontal"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="center_horizontal|center"
             android:text="Bem-vindo"
             android:textAllCaps="false"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
@@ -103,9 +107,13 @@
 
         <Button
             android:id="@+id/profileButton"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="MEU PERFIL"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -113,9 +121,13 @@
 
         <Button
             android:id="@+id/newClassButton"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Criar Turma"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,9 +135,13 @@
 
         <Button
             android:id="@+id/mySubjectsButton"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="92dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Minhas Turmas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,10 +149,14 @@
 
         <Button
             android:id="@+id/logoutButton"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginBottom="32dp"
-            android:text="Logout"
+            android:text="Sair"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -1,18 +1,17 @@
 <resources>
-    <string name="app_name">Dynamic Class - Teacher</string>
+    <string name="app_name">Dynamic Class - Professor</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_name">Display Name</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_up">Sign up</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_different_email">Email are different</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_different_password">Passwords are different</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
+    <string name="prompt_name">Nome de usuário</string>
+    <string name="prompt_password">Senha</string>
+    <string name="action_sign_in">Entrar</string>
+    <string name="action_sign_up">Inscrever-se</string>
+    <string name="action_sign_in_short">Entrar</string>
+    <string name="error_invalid_email">Email inválido</string>
+    <string name="error_different_email">Emails diferem</string>
+    <string name="error_invalid_password">Senha muito curta</string>
+    <string name="error_different_password">Senhas diferem</string>
+    <string name="error_incorrect_password">Senha incorreta</string>
+    <string name="error_field_required">Campo obrigatório</string>
+    <string name="permission_rationale">"Permissões de contato são necessárias para auto preenchimento."
     </string>
 </resources>

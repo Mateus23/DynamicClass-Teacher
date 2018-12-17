@@ -10,11 +10,11 @@
         android:id="@+id/studentsSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_weight="1"
         android:spinnerMode="dialog"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
 
     <Button
         android:id="@+id/profileButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -38,7 +38,7 @@
 
     <Button
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -52,13 +52,14 @@
 
     <TextView
         android:id="@+id/studentsTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:gravity="center"
         android:text="Alunos"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -8,13 +8,14 @@
 
     <TextView
         android:id="@+id/chapterName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:gravity="center"
         android:text="Capitulo X"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,6 +26,10 @@
         android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="24dp"
         android:text="Voltar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +38,7 @@
 
     <Button
         android:id="@+id/buttonApplyExercises"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -47,7 +52,7 @@
 
     <Button
         android:id="@+id/buttonExercises"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -61,7 +66,7 @@
 
     <Button
         android:id="@+id/buttonDelete"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -75,7 +80,7 @@
 
     <TextView
         android:id="@+id/descriptionText"
-        android:layout_width="303dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -83,6 +88,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonExercises"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
