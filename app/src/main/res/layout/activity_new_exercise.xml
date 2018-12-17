@@ -276,7 +276,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
                             android:hint="Alternativa correta"
-                            android:inputType="numberSigned|numberDecimal"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
@@ -291,6 +291,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
                             android:hint="Alternativa errada"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
@@ -305,6 +306,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
                             android:hint="Alternativa errada"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
@@ -319,6 +321,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
                             android:hint="Alternativa errada"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
@@ -333,6 +336,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
                             android:hint="Alternativa errada"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>

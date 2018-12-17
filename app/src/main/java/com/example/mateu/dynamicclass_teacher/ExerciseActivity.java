@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class ExerciseActivity extends AppCompatActivity {
 
     LinearLayout scrollLayout;
-    Button backButton, nextButton, previousButton, deleteButton;
+    Button backButton, nextButton, previousButton;
     TextView difficultyText, nameText;
     DataSnapshot exercisesDataSnapshot;
     String exerciseDifficulty, exerciseKey;
@@ -48,7 +48,6 @@ public class ExerciseActivity extends AppCompatActivity {
 
         nextButton = (Button)findViewById(R.id.nextButton);
         previousButton = (Button)findViewById(R.id.previousButton);
-        deleteButton = (Button)findViewById(R.id.deleteButton);
         difficultyText = (TextView)findViewById(R.id.difficultyText);
         nameText = (TextView)findViewById(R.id.nameText);
         numberOfAnswers = exercisesDataSnapshot.child(exerciseKey).child("Answer").getChildrenCount();
